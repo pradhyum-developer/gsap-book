@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import leftLeaf from "../../../public/images/cocktail-left-leaf.png"
 import rightLeaf from "../../../public/images/cocktail-right-leaf.png"
+import glassVideo from "../../../public/videos/input.mp4"
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/all'
 import gsap from 'gsap'
+import { useMediaQuery } from 'react-responsive'
 const Hero = () => {
+  const videoRef = useRef();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   useGSAP(() => {
     const heroSplit = new SplitText('.title', { type: 'chars , words' });
 
@@ -41,6 +46,29 @@ const Hero = () => {
     })
       .to('.left-leaf', { y: 200 }, 0)
       .to('.right-leaf', { y: -200 }, 0)
+
+
+    // video animations
+    const startValue = isMobile ? 'top 50%' : 'center 60%';
+    const endValue = isMobile ? '120% top' : 'bottom top';
+
+    const vtl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "video",
+        start: startValue,
+        end: endValue,
+        scrub: true,
+        pin: true
+      }
+    })
+
+    videoRef.current.onloadedmetadata = () => {
+      vtl.to(videoRef.current, {
+        currentTime: videoRef.current.duration
+      })
+    }
+
+
   }, [])
 
 
@@ -87,8 +115,21 @@ const Hero = () => {
             </div>
           </div>
         </div>
+
       </section>
-    </React.Fragment>
+
+      {/* videp animations */}
+      <div className='video absolute inset-0'>
+        <video
+          ref={videoRef}
+          src={glassVideo}
+          muted
+          playsInline
+          preload='auto'
+          loop
+        />
+      </div>
+    </React.Fragment >
   )
 }
 
