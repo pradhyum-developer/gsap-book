@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import leftLeaf from "../../../public/images/cocktail-left-leaf.png"
 import rightLeaf from "../../../public/images/cocktail-right-leaf.png"
 import glassVideo from "../../../public/videos/input.mp4"
@@ -15,7 +15,6 @@ const Hero = () => {
 
     const paraSplit = new SplitText('.subtitle', { type: 'lines' })
 
-    console.log('paraSplit :', paraSplit)
 
     heroSplit.chars.forEach(char => char.classList.add('text-gradient'));
 
@@ -44,8 +43,8 @@ const Hero = () => {
         scrub: true,
       }
     })
-      .to('.left-leaf', { y: 200 }, 0)
-      .to('.right-leaf', { y: -200 }, 0)
+      .to('.left-leaf', { y: -200 }, 0)
+      .to('.right-leaf', { y: 200 }, 0)
 
 
     // video animations
@@ -71,6 +70,10 @@ const Hero = () => {
 
   }, [])
 
+
+  useEffect(() => {
+    videoRef.current.playbackRate = 0.1;
+  }, [])
 
 
 

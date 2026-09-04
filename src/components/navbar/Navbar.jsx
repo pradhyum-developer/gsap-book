@@ -1,4 +1,3 @@
-import React from 'react'
 import { navLinks } from '../../constant'
 import logo from "../../../public/images/logo.png"
 import { useGSAP } from '@gsap/react'
